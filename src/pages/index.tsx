@@ -12,16 +12,14 @@ type Props = {
   handleClick: () => void
 } & ContainerProps
 // (3) DOM層
-const Component: React.FC<Props> = props => {
-  return (
-    <div className={props.className}>
-      test
-      <button className="btn" onClick={props.handleClick}>
-        {props.flag ? 'click me' : 'CLICK ME'}
-      </button>
-    </div>
-  )
-}
+const Component: React.FC<Props> = props => (
+  <div className={props.className}>
+    test
+    <button className="btn" onClick={props.handleClick}>
+      {props.flag ? 'click me' : 'CLICK ME'}
+    </button>
+  </div>
+)
 // (4) Style層
 const StyledComponent = styled(Component)`
   color: blue;

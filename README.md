@@ -1,8 +1,8 @@
 # 開発環境
 
-EditorConfig, ESLint, Prettierによる記法の統一、自動整形。
+EditorConfig, ESLint, Prettierによって記法を統一、自動整形をおこないます。
 
-tsconfig.jsonは、Nextが生成するものに `paths` と `baseUrl` を追加したものを使用。
+tsconfig.jsonは、Nextが生成するものに `paths` と `baseUrl` を追加したものを使用します。
 
 要件に応じて.envを導入します。  
 https://github.com/motdotla/dotenv#readme

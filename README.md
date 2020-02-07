@@ -64,13 +64,39 @@ https://twitter.com/soichiro_nitta/status/1222805828320710662?s=20
 
 Redux DevTools Extension chrome / firefox
 
-# スタイルの実装方法、ディレクトリ構成
-styled-components使用
+# スタイルの実装方法
+styled-componentsを使用します。
+カラーやサイズなどの共通化できるものは `utils/styles/` で管理します。
+（styled-componentsのthemingは記述が冗長になるので使用しません。）
+
+グローバルなスタイルは `utils/styles/GlobalStyle.ts` に記述します。
+
+各コンポーネントごとの実装は以下のようにします。
+
+```
+import styled from 'styled-components'
+
+const Component = () => (
+  <div>
+    hoge
+    <p>fuga</p>
+  </div>
+)
+
+const StyledComponent = styled(Component)`
+  color: red;
+  > p {
+    color: blue;
+  }
+`
+```
+
+# ディレクトリ構成
 UsersTitleやUsersListという named exportはせずに title listをどんどん使っていく
 > を2つまでであれば見通しが良いですが、それ以上深くなった場合、別Component として切り出すべきタイミングとなります。
 https://qiita.com/Takepepe/items/41e3e7a2f612d7eb094a
 
-リクエスト部分のモジュール化、まとめ方
+# リクエスト部分のモジュール化、まとめ方
 	リクエスト用のモジュールを作成
 	axiosを直接使わずにリクエストだけを行うモジュールを、$axiosと同じようなインターフェースで実装する
 	（今後 sindresorhus/ky に乗り換えたい！となったとしても同じインターフェースを実装すれば交換できる）
@@ -86,6 +112,3 @@ https://qiita.com/Takepepe/items/41e3e7a2f612d7eb094a
 	https://slides.com/nakajmg/replace-axios-module/#/17
 
 utils/config utils/functions utils/request utils/styles 
-
-Next採用の理由
-SSRやSSGなどの拡張性、開発環境周りの最新への追従がラク、デプロイも楽ルーティング

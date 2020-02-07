@@ -197,7 +197,7 @@ export default updateUserData
 
 1ファイル1関数1export。（パスが一緒でもMethodが異なれば別の関数にします。）
 
-名前をつけることで、パスやMethodを見なくても何をするものか推測しやすくなります。
+名前をつけることで、パスやMethodを見なくても何をするものか推測しやすくなります。  
 また、TypeScriptによるエディタの補完が効くようになります。
 
 参照：https://slides.com/nakajmg/replace-axios-module/#/

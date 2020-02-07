@@ -40,7 +40,7 @@ pages/post/[pid].js → localhost:3000/post/1
 
 以下のように `pid` を取得できます。
 
-```
+```typescript
 import { useRouter } from 'next/router'
 
 const Post = () => {
@@ -70,14 +70,14 @@ Redux DevTools Extension chrome / firefox
 # スタイルの実装方法
 
 styled-componentsを使用します。  
-カラーやサイズなどの共通化できるものは `utils/styles/` で管理します。  
+カラーやサイズなどの共通化できるものは `src/utils/styles/` で管理します。  
 （styled-componentsのthemingは記述が冗長になるので使用しません。）
 
-グローバルなスタイルは `utils/styles/GlobalStyle.ts` に記述します。
+グローバルなスタイルは `src/utils/styles/GlobalStyle.ts` に記述します。
 
-各コンポーネントごとの実装は以下のようにします。
+各コンポーネントごとのスタイルは以下のようにします。
 
-```
+```typescript
 import styled from 'styled-components'
 
 const Component = () => (
@@ -99,7 +99,7 @@ const StyledComponent = styled(Component)`
 
 以下のような5層でコンポーネントを構成します。
 
-```
+```typescript
 // (1) import層
 import React from 'react'
 import styled from 'styled-components'
@@ -119,7 +119,7 @@ const Container: React.FC<ContainerProps> = props => {
 Style層で `>` が2つまでであれば見通しが良いですが、  
 それ以上深くなる場合は、別コンポーネントとして切り出すべきタイミングとなります。
 
-```
+```typescript
 const StyledComponent = styled(Component)`
 > * > * > button {...}
 `
@@ -159,19 +159,44 @@ https://jp.vuejs.org/v2/style-guide/#%E5%9F%BA%E5%BA%95%E3%82%B3%E3%83%B3%E3%83%
 参照：密結合コンポーネントの名前  
 https://jp.vuejs.org/v2/style-guide/#%E5%AF%86%E7%B5%90%E5%90%88%E3%82%B3%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%8D%E3%83%B3%E3%83%88%E3%81%AE%E5%90%8D%E5%89%8D-%E5%BC%B7%E3%81%8F%E6%8E%A8%E5%A5%A8
 
-# リクエスト部分のモジュール化、まとめ方
-	リクエスト用のモジュールを作成
-	axiosを直接使わずにリクエストだけを行うモジュールを、$axiosと同じようなインターフェースで実装する
-	（今後 sindresorhus/ky に乗り換えたい！となったとしても同じインターフェースを実装すれば交換できる）
+# 非同期通信
 
-	エンドポイントの関数化
-	エンドポイントごとに関数化して、関数ごとにファイルをわける。
-	1ファイル1関数1export
-	（パスが一緒でもMethodが異なれば別の関数にする）
-	名前をつけることで、パスやMethodを見なくても何をするものか推測できるようになる
-	既存コードを読む負担の軽減
-	APIに関するコードの一貫性向上
-	APIの変更にも強い
-	https://slides.com/nakajmg/replace-axios-module/#/17
+axiosを用いて非同期通信をおこないますが、  
+ラップしたリクエストを担うモジュールを、`src/utils/request/` に実装しています。
+（今後、axios以外に乗り換えたい！となったとしても同じインターフェースを実装すれば交換できる構成としています。）
 
-utils/config utils/functions utils/request utils/styles 
+# エンドポイントの関数化
+
+`src/api/` フォルダ配下で、エンドポイントごとに関数化したファイルを管理し、  
+APIに関するコードの一貫性向上、APIの変更に備えます。
+
+```typescript
+// src/api/getUserData.js
+import request from '~/utils/request'
+ 
+function getUserData({ userId }) {
+  const path = `/users/${userId}`
+  return request.get(path)
+}
+ 
+export default getUserData
+```
+
+```typescript
+// src/api/updateUserData.js
+import request from '~/utils/request'
+ 
+function updateUserData({ userId, data }) {
+  const path = `/users/${userId}`
+  return request.put(path, { data })
+}
+ 
+export default updateUserData
+```
+
+1ファイル1関数1export。（パスが一緒でもMethodが異なれば別の関数にします。）
+
+名前をつけることで、パスやMethodを見なくても何をするものか推測しやすくなります。
+また、TypeScriptによるエディタの補完が効くようになります。
+
+参照：https://slides.com/nakajmg/replace-axios-module/#/

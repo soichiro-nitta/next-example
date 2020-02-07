@@ -60,12 +60,13 @@ Redux Toolkitを使用したスタイルを採用。
 Reduxの公式スタイルガイドで、Redux Toolkitの使用が推奨されています。  
 https://redux.js.org/style-guide/style-guide/#use-redux-toolkit-for-writing-redux-logic
 
+非同期処理については、redux-thunkやredux-sagaを用いず、カスタムフックを作成します。  
+https://qiita.com/Naturalclar/items/6157d0b031bbb00b3c73
 
-非同期処理について  
-redux-thunkやredux-sagaを用いず、カスタムフックを作成します。  
-https://twitter.com/soichiro_nitta/status/1222805828320710662?s=20
+カスタムフックは `src/hooks/` フォルダ配下で管理します。
 
-Redux DevTools Extension chrome / firefox
+Redux DevTools Extensionを用いて検証をおこないます。
+https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=ja
 
 # スタイルの実装方法
 

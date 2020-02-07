@@ -65,8 +65,8 @@ https://twitter.com/soichiro_nitta/status/1222805828320710662?s=20
 Redux DevTools Extension chrome / firefox
 
 # スタイルの実装方法
-styled-componentsを使用します。
-カラーやサイズなどの共通化できるものは `utils/styles/` で管理します。
+styled-componentsを使用します。  
+カラーやサイズなどの共通化できるものは `utils/styles/` で管理します。  
 （styled-componentsのthemingは記述が冗長になるので使用しません。）
 
 グローバルなスタイルは `utils/styles/GlobalStyle.ts` に記述します。
@@ -91,7 +91,48 @@ const StyledComponent = styled(Component)`
 `
 ```
 
+# コンポーネント設計 / ディレクトリ構成
+以下のような5層でコンポーネントを構成します。  
+参照：https://qiita.com/Takepepe/items/41e3e7a2f612d7eb094a
+```
+// (1) import層
+import React from 'react'
+import styled from 'styled-components'
+// (2) Types層
+type ContainerProps = {...}
+type Props = {...} & ContainerProps
+// (3) DOM層
+const Component: React.FC<Props> = props => (...)
+// (4) Style層
+const StyledComponent = styled(Component)`...`
+// (5) Container層
+const Container: React.FC<ContainerProps> = props => {
+  return <StyledComponent {...props} />
+}
+```
+
 # ディレクトリ構成
+`UsersListItem.tsx` といった命名をせずに以下のようにディレクトリを切る構成にします。
+スタイルのネストを目安に
+
+また、これが複数のコンポーネントで利用されるタイミングで共通フォルダへ移行します。
+参照：https://qiita.com/Takepepe/items/41e3e7a2f612d7eb094a#comment-905be26e139a8fb1e9cb
+
+```
+Users
+├── index.tsx
+├── title.tsx
+└── list
+    ├── index.tsx
+    ├── title.tsx
+    └── item
+        ├── index.tsx
+        ├── title.tsx
+        ├── avatar.tsx
+        └── icon.svg
+
+```
+
 UsersTitleやUsersListという named exportはせずに title listをどんどん使っていく
 > を2つまでであれば見通しが良いですが、それ以上深くなった場合、別Component として切り出すべきタイミングとなります。
 https://qiita.com/Takepepe/items/41e3e7a2f612d7eb094a

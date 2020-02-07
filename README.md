@@ -12,12 +12,14 @@ Next.js開発元であるZEIT製のZEIT Nowを使用。
 https://zeit.co/
 
 # デプロイ
+
 以下のコマンドを実行後、`out/` ディレクトリにSPAが生成されます。
 ```
 yarn run build && yarn run export
 ```
 
 # ルーター
+
 Next.jsに備わるDynamic Routingを使用していきます。  
 https://nextjs.org/docs/routing/dynamic-routes
 
@@ -53,6 +55,7 @@ export default Post
 
 
 # ステート管理
+
 Redux Toolkitを使用したスタイルを採用。  
 Reduxの公式スタイルガイドで、Redux Toolkitの使用が推奨されています。  
 https://redux.js.org/style-guide/style-guide/#use-redux-toolkit-for-writing-redux-logic
@@ -65,6 +68,7 @@ https://twitter.com/soichiro_nitta/status/1222805828320710662?s=20
 Redux DevTools Extension chrome / firefox
 
 # スタイルの実装方法
+
 styled-componentsを使用します。  
 カラーやサイズなどの共通化できるものは `utils/styles/` で管理します。  
 （styled-componentsのthemingは記述が冗長になるので使用しません。）
@@ -92,8 +96,9 @@ const StyledComponent = styled(Component)`
 ```
 
 # コンポーネント設計 / ディレクトリ構成
-以下のような5層でコンポーネントを構成します。  
-参照：https://qiita.com/Takepepe/items/41e3e7a2f612d7eb094a
+
+以下のような5層でコンポーネントを構成します。
+
 ```
 // (1) import層
 import React from 'react'
@@ -111,15 +116,27 @@ const Container: React.FC<ContainerProps> = props => {
 }
 ```
 
-# ディレクトリ構成
-`UsersListItem.tsx` といった命名をせずに以下のようにディレクトリを切る構成にします。
-スタイルのネストを目安に
+Style層で `>` が2つまでであれば見通しが良いですが、  
+それ以上深くなる場合は、別コンポーネントとして切り出すべきタイミングとなります。
 
-また、これが複数のコンポーネントで利用されるタイミングで共通フォルダへ移行します。
+```
+const StyledComponent = styled(Component)`
+> * > * > button {...}
+`
+```
+↑ `>` が3つ続いているため、このあたりで切り出す目安とします。
+
+参照：https://qiita.com/Takepepe/items/41e3e7a2f612d7eb094a
+
+# ディレクトリ構成
+
+`UsersListItem.tsx` といった命名はせずに、  
+`users/list/item/index.tsx` のようにディレクトリを切る構成にします。  
+
 参照：https://qiita.com/Takepepe/items/41e3e7a2f612d7eb094a#comment-905be26e139a8fb1e9cb
 
 ```
-Users
+users
 ├── index.tsx
 ├── title.tsx
 └── list
@@ -133,9 +150,14 @@ Users
 
 ```
 
-UsersTitleやUsersListという named exportはせずに title listをどんどん使っていく
-> を2つまでであれば見通しが良いですが、それ以上深くなった場合、別Component として切り出すべきタイミングとなります。
-https://qiita.com/Takepepe/items/41e3e7a2f612d7eb094a
+Vue.jsスタイルガイドにあるルールを参考にしますが、  
+上述のとおりパスカルケースやケバブケースは用いずにディレクトリを切ってしまう方針です。
+
+参照：基底コンポーネントの名前  
+https://jp.vuejs.org/v2/style-guide/#%E5%9F%BA%E5%BA%95%E3%82%B3%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%8D%E3%83%B3%E3%83%88%E3%81%AE%E5%90%8D%E5%89%8D-%E5%BC%B7%E3%81%8F%E6%8E%A8%E5%A5%A8
+
+参照：密結合コンポーネントの名前  
+https://jp.vuejs.org/v2/style-guide/#%E5%AF%86%E7%B5%90%E5%90%88%E3%82%B3%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%8D%E3%83%B3%E3%83%88%E3%81%AE%E5%90%8D%E5%89%8D-%E5%BC%B7%E3%81%8F%E6%8E%A8%E5%A5%A8
 
 # リクエスト部分のモジュール化、まとめ方
 	リクエスト用のモジュールを作成

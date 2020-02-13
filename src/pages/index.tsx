@@ -14,7 +14,8 @@ type Props = {
 // (3) DOM層
 const Component: React.FC<Props> = props => (
   <div className={props.className}>
-    test
+    index.tsx
+    <a href="/pixi">to pixi.tsx</a>
     <button className="btn" onClick={props.handleClick}>
       {props.flag ? 'click me' : 'CLICK ME'}
     </button>
@@ -23,12 +24,6 @@ const Component: React.FC<Props> = props => (
 // (4) Style層
 const StyledComponent = styled(Component)`
   color: blue;
-  .btn {
-    color: yellow;
-  }
-  > button {
-    color: blue;
-  }
 `
 // (5) Container層
 const Container: React.FC<ContainerProps> = props => {

@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { StateTypes } from '~/store'
 import { setName } from '~/store/user'
+import Link from 'next/link'
 // (2) Types層
 type ContainerProps = {}
 type Props = {
@@ -15,7 +16,7 @@ type Props = {
 const Component: React.FC<Props> = props => (
   <div className={props.className}>
     index.tsx
-    <a href="/pixi">to pixi.tsx</a>
+    <Link href="/pixi">to pixi.tsx</Link>
     <button className="btn" onClick={props.handleClick}>
       {props.flag ? 'click me' : 'CLICK ME'}
     </button>

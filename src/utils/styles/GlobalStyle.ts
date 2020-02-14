@@ -103,8 +103,8 @@ export default createGlobalStyle`
     display: none;
   }
   button {
-    border: none;
-    background: none;
+    /* border: none;
+    background: none; */
   }
   .tbc {
     display: table-cell;

@@ -1,24 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
-let PIXI: any
-if (typeof window !== `undefined`) {
-  PIXI = require('pixi.js')
-}
+import dynamic from 'next/dynamic'
+const Artboard = dynamic(() => import('~/components/base/artboard'), {
+  ssr: false
+})
 
-type ContainerProps = {}
-type Props = {
-  className: string
-} & ContainerProps
+type ContainerProps = { className: string }
+type Props = {} & ContainerProps
 
 const Component: React.FC<Props> = props => (
   <div className={props.className}>
-    pixi.tsx
+    <Artboard className="artboard" />
     <Link href="/">
-      <a>to index.tsx</a>
-    </Link>
-    <Link href="/post/2">
-      <a>to post 2</a>
+      <button>to index.tsx</button>
     </Link>
   </div>
 )
@@ -28,12 +23,7 @@ const StyledComponent = styled(Component)`
 `
 
 const Container: React.FC<ContainerProps> = props => {
-  React.useEffect(() => {
-    const app = new PIXI.Application()
-    document.body.appendChild(app.view)
-  }, [])
-
-  return <StyledComponent {...props} className="pixi" />
+  return <StyledComponent className="pixi" {...props} />
 }
 
 export default Container

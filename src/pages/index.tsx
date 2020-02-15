@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { StateTypes } from '~/store'
 import { setName } from '~/store/user'
 import Link from 'next/link'
+import soichiro from 'soichiro-npm-example'
 
 type ContainerProps = {}
 type Props = {
@@ -29,6 +30,7 @@ const Container: React.FC<ContainerProps> = props => {
   dispatch(setName('aaa'))
   const name = useSelector((state: StateTypes) => state.user.name)
   console.log(name)
+  soichiro()
 
   const [flag, setFlag] = React.useState(false)
   const handleClick = React.useCallback(() => {

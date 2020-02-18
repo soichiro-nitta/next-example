@@ -6971,6 +6971,11 @@ snapdragon@^0.8.1:
     source-map-resolve "^0.5.0"
     use "^3.1.0"
 
+soichiro-npm-example@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/soichiro-npm-example/-/soichiro-npm-example-1.0.0.tgz#e9684e668ab891f47ed059e860a15436b53685e4"
+  integrity sha512-yahYVUiqCyq3TrtytSqzHsoS62WCOJKTdw4p14lHkTJauXQtb4uj5/+572qfFum+AvnkKeaDFJ4kXGDEnDF6Ew==
+
 sort-keys@^1.0.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/sort-keys/-/sort-keys-1.1.2.tgz#441b6d4d346798f1b4e49e8920adfba0e543f9ad"

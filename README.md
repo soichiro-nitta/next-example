@@ -96,7 +96,7 @@ const StyledComponent = styled(Component)`
 `
 ```
 
-# コンポーネント設計 / ディレクトリ構成
+# コンポーネント設計
 
 以下のような5層でコンポーネントを構成します。
 
